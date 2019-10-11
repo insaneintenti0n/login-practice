@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            body { font-size: 20px; }
+            .main { text-align: center; }
+            input { margin-left: 10px; width: 350px; height: 40px; font-size: 20px; }
+            .input-section { height: 30px; padding: 15px; }
+            button { width: 150px; height: 40px; margin-top: 40px; margin-right: 10px; }
+            label { display: inline-block; width: 140px; text-align: right; }
+            #result { margin-top: 60px; font-size: 50px; }
+            #child { display: none; }
+            .instructions { position: absolute; bottom: 20px; font-size: 15px; }
+            .note, .privacy { margin-top: 20px; }
+        </style>
+
+        <script type="text/javascript">
+
+        //Change User and Password here.
+        let userTest = '';
+        let passwordTest = '';
+
+        function firstOK() {
+            userTest = document.getElementById('firstUsername').value;
+            passwordTest = document.getElementById('firstPassword').value;
+
+            document.getElementById('initial').style.display = 'none';
+            document.getElementById('child').style.display = 'block';
+        }
+
+        function firstCancel() {
+            document.getElementById('firstUsername').value = '';
+            document.getElementById('firstPassword').value = '';
+        }
+
+        function cancel() {
+            document.getElementById('username').value = '';
+            document.getElementById('password').value = '';
+            document.getElementById('result').innerHTML = '';
+        }
+
+        function okButton() {
+            if (document.getElementById('username').value === userTest
+                && document.getElementById('password').value === passwordTest) {
+                document.getElementById('result').innerHTML = '&#128513; You did it!';
+            } else {
+                document.getElementById('result').innerHTML = '&#128546; Try again.';
+                document.getElementById('password').value = '';
+            }
+        }
+
+        function onLoad() {
+            if (userTest !== '' && passwordTest !== '') {
+                document.getElementById('initial').style.display = 'none';
+                document.getElementById('child').style.display = 'block';
+            }
+
+            document.getElementById('firstUsername').value = userTest;
+            document.getElementById('firstPassword').value = passwordTest;
+
+            var input = document.getElementById('password');
+
+            input.addEventListener("keyup", function(event) {
+                if (event.keyCode === 13) {
+                    event.preventDefault();
+                    document.getElementById('ok').click();
+                }
+            });
+        }
+        </script>
+    </head>
+
+    <body onload='onLoad()'>
+        <div id='initial'>
+            <h1> PARENT: Enter the Username and Password assigned</h1>
+            <div class='main'>
+                <div class='input-section'>
+                    <label for='firstUsername'> The Username: </label>
+                    <input id='firstUsername' type='textbox' />
+                </div>
+                <div class='input-section'>
+                    <label for='firstPassword'> The Password: </label>
+                    <input id='firstPassword' type='textbox' />
+                </div>
+
+                <div>
+                    <button id='firstOK' onClick='firstOK()'> OK </button>
+                    <button onClick='firstCancel()'> Cancel </button>
+                </div>
+            </div>
+
+            <div class='instructions'>
+                <div> <b>Instructions:</b> </div>
+                <div> Enter the assigned username and password, and click OK. </div>
+                <div> The child can then practice typing their username and password. </div>
+                <div> They will get a &#128513; when correct, or a &#128546; when incorrect. </div>
+                <div> Refresh this page (F5) to start over. </div>
+
+                <div class='privacy'> <b>Privacy Notice:</b> No data is stored or sent anywhere. </div>
+
+                <div class='note'> <b>Note:</b> You can edit this file to hardcode the username and password on lines 20 & 21 to skip this step. </div>
+            </div>
+        </div>
+
+        <div id='child'>
+            <h1>Practice Your Username and Password</h1>
+            <div class='main'>
+                <div class='input-section'>
+                    <label for='username'> Username: </label>
+                    <input id='username' type='textbox' />
+                </div>
+                <div class='input-section'>
+                    <label for='password'> Password: </label>
+                    <input id='password' type='password' />
+                </div>
+
+                <div>
+                    <button id='ok' onClick='okButton()'> OK </button>
+                    <button onClick='cancel()'> Cancel </button>
+                </div>
+
+                <div id='result' />
+            </div>
+        </div>
+    </body>
+</html>
